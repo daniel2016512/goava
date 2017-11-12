@@ -1,7 +1,7 @@
 package ops
 
 import (
-	"github.com/goava/whc"
+	"github.com/meooio/goava/whc"
 )
 
 // An interface to be implemented by all database connectors

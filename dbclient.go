@@ -1,8 +1,8 @@
 package goava
 
 import (
-	"github.com/goava/driver/cassandradb"
-	"github.com/goava/ops"
+	"github.com/meooio/goava/driver/cassandradb"
+	"github.com/meooio/goava/ops"
 )
 
 type CassDBConfig struct {
@@ -47,34 +47,3 @@ func NewDBClient(conf ClientConfig) (DBClient, error) {
 		return nil, ops.ErrDBUnsupported
 	}
 }
-
-/*
-func NewConfig(config Config) (*Config, error) {
-  conf := &config
-  flagsInf, err := config.RegisterFlags(conf)
-  if err != nil || flagsInf == nil {
-    fmt.Printf("could not register commandline config flags :: %v", err)
-    return nil, err
-  }
-  flags := flagsInf.(*Config)
-  flag.Parse()
-
-  configFile := flags.ConfigFile
-  if configFile != "" {
-    // config file has been specified
-    if util.FileExists(configFile) {
-      fmt.Printf("loading config file from %s\n", configFile)
-      if _, err := toml.DecodeFile(configFile, conf); err != nil {
-        fmt.Printf("error reading config from file: %s :: %v\n", configFile,
-          err)
-        return nil, err
-      }
-    } else {
-      fmt.Printf("did not find config file: %s\n", configFile)
-      return nil, os.ErrNotExist
-    }
-  }
-  config.CheckFlagOverride(conf, flags)
-  return conf, nil
-}
-*/

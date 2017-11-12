@@ -1,4 +1,4 @@
-package cassandradb
+package example
 
 import (
 	"fmt"
@@ -8,6 +8,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/meooio/goava"
 	"github.com/meooio/goava/whc"
 )
 
@@ -73,9 +74,7 @@ var (
 )
 
 var Cities = []string{"London", "San Francisco", "New York", "Bangalore"}
-
 var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
-
 var numberRunes = []rune("1234567890")
 
 func getRandomString(n int) string {
@@ -96,7 +95,16 @@ func getRandomNumber(n int) string {
 
 func TestKeySpaceCreate(t *testing.T) {
 
-	dbclient, errDB := NewClient(serverlist, keyspacename)
+	config := goava.ClientConfig {
+		DBType : "cassandra",
+		CassandraConfig : goava.CassDBConfig {
+			ServerList : "127.0.0.1",
+			Port : 9042,
+			KeySpace  : "newkeyspace",
+		},
+	}
+
+	dbclient, errDB := goava.NewDBClient(config)
 	assert.Nil(t, errDB)
 	defer dbclient.Disconnect()
 
@@ -110,7 +118,16 @@ func TestKeySpaceCreate(t *testing.T) {
 
 func TestKeySpaceList(t *testing.T) {
 
-	dbclient, errDB := NewClient(serverlist, keyspacename)
+	
+	config := goava.ClientConfig {
+		DBType : "cassandra",
+		CassandraConfig : goava.CassDBConfig {
+			ServerList : "127.0.0.1",
+			Port : 9042,
+			KeySpace :  "newkeyspace",
+		},
+	}
+	dbclient, errDB := goava.NewDBClient(config)
 	assert.Nil(t, errDB)
 	defer dbclient.Disconnect()
 	ks, errKS1 := dbclient.ListDBs()
@@ -119,21 +136,17 @@ func TestKeySpaceList(t *testing.T) {
 	fmt.Printf("Keyspaces : %v\n\n", ks)
 }
 
-/*func TestKeySpaceDelete(t *testing.T) {
-
-  dbclient, errDB := NewClient(serverlist, keyspacename)
-  assert.Nil(t, errDB)
-    defer dbclient.Disconnect()
-
-    // initialize the cassandra database
-    dbExists, errKS1 := dbclient.DoesKeyspaceExist(keyspacename)
-    assert.Nil(t, errKS1)
-    assert.True(t, dbExists, "keyspace should exist")
-    errDB2 := dbclient.DropKeySpace(keyspacename)
-    assert.Nil(t, errDB2)
-}*/
-
 func TestCreateTable(t *testing.T) {
+
+	config := goava.ClientConfig {
+		DBType : "cassandra",
+		CassandraConfig : goava.CassDBConfig {
+			ServerList : "127.0.0.1",
+			Port : 9042,
+			KeySpace  : "newkeyspace",
+		},
+	}
+	
 
 	rand.Seed(time.Now().UnixNano())
 	assert.True(t, true, "True is true!")
@@ -176,7 +189,7 @@ func TestCreateTable(t *testing.T) {
 		SSOIds:    ids,
 	}
 
-	dbclient, errDB := NewClient(serverlist, keyspacename)
+	dbclient, errDB := goava.NewDBClient(config)
 	assert.Nil(t, errDB)
 	defer dbclient.Disconnect()
 
@@ -232,16 +245,6 @@ func TestCreateTable(t *testing.T) {
 		},
 	}
 
-	/*var orderByClause = []OrderByClauseType {
-	  OrderByClauseType{
-	    columnName:   "lastname",
-	    orderType: "ASC",
-	  },
-	  OrderByClauseType{
-	    columnName:   "firstname",
-	    orderType: "DESC",
-	  },
-	}*/
 
 	userwithWhereClause, errReadWhereClause := table.Read(whereClause, nil, nil)
 	assert.Nil(t, errReadWhereClause)
@@ -434,9 +437,15 @@ func TestCreateTable(t *testing.T) {
 
 func TestDropTable(t *testing.T) {
 
-	dbclient, errDB := NewClient(serverlist, keyspacename)
+	config := goava.ClientConfig {
+		DBType : "cassandra",
+		CassandraConfig : goava.CassDBConfig {
+			ServerList : "127.0.0.1",
+			Port : 9042,
+			KeySpace  : "newkeyspace",
+		},
+	}
+	dbclient, errDB := goava.NewDBClient(config)
 	assert.Nil(t, errDB)
 	defer dbclient.Disconnect()
-	// err := dbclient.DropTable("user")
-	// assert.Nil(t, err)
 }

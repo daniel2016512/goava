@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"github.com/gocql/gocql"
-	"github.com/goava/whc"
+	"github.com/meooio/goava/whc"
 )
 
 // housekeeping operations

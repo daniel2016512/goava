@@ -12,7 +12,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/goava/ops"
+	"github.com/meooio/goava/ops"
 )
 
 // Client implements the client interface to Cassandra.

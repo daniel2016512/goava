@@ -8,7 +8,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/goava/ops"
+	"github.com/meooio/goava/ops"
 	"github.com/gocql/gocql"
 )
 

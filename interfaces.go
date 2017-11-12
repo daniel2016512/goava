@@ -1,7 +1,7 @@
 package goava
 
 import (
-	"github.com/goava/ops"
+	"github.com/meooio/goava/ops"
 )
 
 type DBClient interface {
